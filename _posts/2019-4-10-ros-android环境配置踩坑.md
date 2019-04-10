@@ -1,6 +1,4 @@
-# ros-android环境配置踩坑
-
-***本文写于2019年4月10日，记录了我在配置ros-android环境的时候遇到的各种问题***
+***本文写于2019年4月10日，记录了笔者在配置ros-android环境的时候遇到的各种问题***
 
 ## 环境
 
@@ -10,7 +8,7 @@
 
 ## 搭梯子
 
-我使用了Shadowsocks，这个教程比较多，可自行Google。
+我使用了Shadowsocks，这个配置教程比较多，可自行Google。
 
 Shadowsocks使用socks5协议，而终端很多工具目前只支持http和https等协议，所以笔者为终端设置Shadowsocks的思路就是将socks5协议转换成http协议。
 
