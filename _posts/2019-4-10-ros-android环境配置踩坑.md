@@ -5,7 +5,7 @@
 ## 环境
 
 * 操作系统：Ubuntu16.04
-* Android Studio版本：
+* Android Studio版本：3.3.2
 * ROS版本：kinetic
 
 ## 搭梯子
@@ -60,10 +60,37 @@ Shadowsocks使用socks5协议，而终端很多工具目前只支持http和https
 
 首先需要安装Java，ROS官网上推荐的是openjdk8，不过笔者装的是[Oracle JDK8](https://www.oracle.com/technetwork/cn/java/javase/downloads/jdk8-downloads-2133151-zhs.html)，目前来看使用中并没有遇到什么问题。
 
-Oracle JDK的安装网上也有很多，就不赘述了（记得安装好后配置好环境变量）。
+Oracle JDK的安装网上也有很多，就不赘述了（记得安装完后配置好环境变量）。
 
 然后安装Android Studio。
 
 安装完成后，在终端打开Android Studio前，先将确保该会话已翻墙（用上一节的方法，这点很重要，因为Android Studio会尝试联网下载Gradle等工具包，但是很不幸这些网站被墙了，下载失败的话Android Studio无法正常编译运行代码）。在Android Studio中可设置HTTP代理：在File>Settings页面找到http_proxy界面设置代理模式为`Manual Proxy Configuration`，Host为`127.0.0.1`，端口为`8123`（即交由polipo代理）。设置完后可点击下方的`check connection`检查是否成功。
 
 **在安装过程中似乎也会弹出窗口要求设置代理，使用上面类似的方法设置即可。**
+
+其余步骤可以按照ROS[官网](http://wiki.ros.org/android/kinetic/Android%20Studio/Download)完成。
+
+## 安装Ros Kinetic
+
+请按照[官网](http://wiki.ros.org/kinetic/Installation/Ubuntu)的步骤安装，注意两点
+
+1. 推荐安装Desktop-Full版本，笔者一开始装的Desktop版，官网上的开发环境安装Test依赖的Compressed包在Desktop版里没有，结果排查了好久才找到原因。
+2. 注意用zsh的小伙伴配置环境的时候选择`ros/kinetic/setup.zsh`，而不是`ros/kinetic/setup.bash`。
+
+## 安装Ros Development Environment
+
+按照[官网](http://wiki.ros.org/android/Tutorials/kinetic/Installation%20-%20ROS%20Development%20Environment)安装core android libraries，最后一句话命令无法执行成功
+
+   ```
+   catkin_make
+   ```
+
+执行后会报这样的错误
+
+> Could not find method google() for arguments [] on repository container of type org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.
+
+最后笔者在github的[issue](https://github.com/rosjava/android_core/issues/292#issuecomment-465554790)里找到了解决方案：用` ./gradlew build --debug`代替`catkin_make`。
+
+这样就装完了core android libraries。
+
+最后在Testing过程中，如果出现打开摄像头就闪退的情况，大概率是应用没有打开摄像头的权限（虽然代码里已经申请过了，但是笔者试验了两台机器都没有成功拿到权限），去系统的权限管理中开一下就行了。
